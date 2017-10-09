@@ -9,14 +9,14 @@ uint8_t sample_input_pin() {
 }
 
 uint8_t ledpin(const uint8_t led) {
-    return led;
+  return led;
 }
 
 
 void setup_dcf77() {
   Serial.begin(115200);
   Serial.println(F("Setup DCF77"));
-  Serial.println(-------------------------------);
+  Serial.println("-------------------------------");
   Serial.print(F("Sample Pin:      ")); Serial.println(dcf77_sample_pin);
   Serial.print(F("Sample Pin Mode: ")); Serial.println(dcf77_pin_mode);
   Serial.print(F("Inverted Mode:   ")); Serial.println(dcf77_inverted_samples);
@@ -87,5 +87,18 @@ void loop_dcf77() {
     Serial.print(now.uses_summertime ? '2' : '1');
     Serial.println();
   }
+}
+
+
+static boolean isClockStateClean() {
+  boolean returnValue  = false;
+  uint8_t state = DCF77_Clock::get_clock_state();
+
+  
+  if (state == Clock::synced || state == Clock::locked) {
+    returnValue = true;
+
+  }
+  return returnValue;
 }
 
